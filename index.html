@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gako — Konektatu. Sortu. Hazi.</title>
+<link rel="preload" href="fonts/Poppins-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/vendor/leaflet.css">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/tailwind.css">
+</head>
+<body>
+
+<!-- ████████ LANG SWITCHER STYLES ████████ -->
+
+<!-- ████████ NAVBAR ████████ -->
+<nav id="navbar" class="navbar py-4">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#" onclick="goTo('inicio'); return false;" class="flex items-end gap-1 group">
+      <div class="leading-none">
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; line-height:1; color:#598196; letter-spacing:0.08em;">GA</div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:2rem; line-height:1; color:#86B4C4; letter-spacing:0.08em; margin-top:-4px;">KO</div>
+      </div>
+      <div style="width:4px; height:4px; border-radius:50%; background:#86B4C4; margin-bottom:6px;"></div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden lg:flex items-center gap-8">
+      <li><a href="#" onclick="goTo('inicio'); return false;" class="nav-link" data-i18n="nav.inicio">Hasiera</a></li>
+      <li><a href="#" onclick="goTo('equipo'); return false;" class="nav-link" data-i18n="nav.equipo">Taldea</a></li>
+      <li><a href="#" onclick="goTo('proyectos'); return false;" class="nav-link" data-i18n="nav.proyectos">Proiektuak</a></li>
+      <li><a href="#" onclick="goTo('extranjero'); return false;" class="nav-link" data-i18n="nav.extranjero">Atzerrira</a></li>
+      <li><a href="#" onclick="goTo('contacto'); return false;" class="nav-link" data-i18n="nav.contacto">Kontaktua</a></li>
+    </ul>
+
+    <!-- CTA + Lang + Hamburger -->
+    <div class="flex items-center gap-3">
+      <!-- Language switcher -->
+      <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLang('eu')">EU</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+      </div>
+      <a href="#" onclick="goTo('contacto'); return false;" class="hidden md:inline-block btn-primary text-sm py-2 px-5" data-i18n="nav.cta">Lan egin dezagun</a>
+      <button id="hamburger" class="lg:hidden flex flex-col gap-1.5 p-2" aria-label="Abrir menú">
+        <span class="ham-bar block w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+        <span class="ham-bar block w-6 h-0.5 bg-gray-700 transition-all duration-300"></span>
+        <span class="ham-bar block w-4 h-0.5 bg-gray-700 transition-all duration-300 self-end"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="lg:hidden bg-white border-t border-gray-100 shadow-lg">
+    <ul class="flex flex-col py-4 px-6 gap-4">
+      <li><a href="#" onclick="goTo('inicio'); return false;" class="nav-link block py-2" onclick="closeMobile()" data-i18n="nav.inicio">Hasiera</a></li>
+      <li><a href="#" onclick="goTo('equipo'); return false;" class="nav-link block py-2" onclick="closeMobile()" data-i18n="nav.equipo">Taldea</a></li>
+      <li><a href="#" onclick="goTo('proyectos'); return false;" class="nav-link block py-2" onclick="closeMobile()" data-i18n="nav.proyectos">Proiektuak</a></li>
+      <li><a href="#" onclick="goTo('extranjero'); return false;" class="nav-link block py-2" onclick="closeMobile()" data-i18n="nav.extranjero">Atzerrira</a></li>
+      <li><a href="#" onclick="goTo('contacto'); return false;" class="nav-link block py-2" onclick="closeMobile()" data-i18n="nav.contacto">Kontaktua</a></li>
+      <li><a href="#" onclick="goTo('contacto'); return false;" class="btn-primary text-center mt-2" onclick="closeMobile()" data-i18n="nav.cta">Lan egin dezagun</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ████████ HERO ████████ -->
+<div id="page-inicio" class="page  active">
+<section id="inicio" class="hero-bg min-h-screen flex items-center pt-20">
+  <div class="max-w-7xl mx-auto px-6 py-24 relative z-10 w-full">
+    <div class="max-w-3xl">
+
+      <!-- Badge -->
+      <div class="fade-in flex flex-wrap gap-3 mb-8">
+        <span class="value-pill">✦ Maitasuna</span>
+        <span class="value-pill">✦ Ilusioa</span>
+        <span class="value-pill">✦ Konpromezua</span>
+        <span class="value-pill">✦ Indarra</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="fade-in section-title text-[5.5rem] md:text-[7.5rem] leading-none text-white mb-6"
+          style="text-shadow: 0 4px 24px rgba(89,129,150,0.3);">
+        <span data-i18n="hero.line1">Pertsonak</span><br>
+        <span style="color:#2a4a58;" data-i18n="hero.line2">Konektatzen.</span><br>
+        <span data-i18n="hero.line3">Etorkizuna</span><br>
+        <span style="color:#2a4a58;" data-i18n="hero.line4">Sortzen.</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="fade-in text-lg md:text-xl text-slate-700 font-light max-w-xl mb-10 leading-relaxed" data-i18n="hero.subtitle">
+        Talde ekintzaile bat gara, gure lurraldearen etorkizuna sormena, berrikuntza eta ilusioarekin sortu eta zaintzeko konpromiso sendoa duena.
+      </p>
+
+      <!-- Buttons -->
+      <div class="fade-in flex flex-wrap gap-4 items-center mb-16">
+        <a onclick="document.getElementById('quienes').scrollIntoView({behavior:'smooth'})" class="btn-primary" href="#" data-i18n="hero.btn1">Gako ezagutu</a>
+        <a href="#" onclick="goTo('proyectos'); return false;" class="btn-outline" data-i18n="hero.btn2">Proiektuak ikusi</a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="fade-in">
+        <div class="scroll-indicator">
+          <div class="scroll-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats floating card -->
+    <div class="hidden xl:flex absolute right-8 bottom-16 bg-white/80 backdrop-blur-md rounded-2xl p-8 shadow-xl gap-8 border border-white">
+      <div class="text-center">
+        <div class="stat-num">14</div>
+        <div style="font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#86B4C4; margin-top:4px;" data-i18n="stats.projects">Proiektu</div>
+      </div>
+      <div style="width:1px; background:#e2e8f0;"></div>
+      <div class="text-center">
+        <div class="stat-num">4</div>
+        <div style="font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#86B4C4; margin-top:4px;" data-i18n="stats.countries">Herrialde</div>
+      </div>
+      <div style="width:1px; background:#e2e8f0;"></div>
+      <div class="text-center">
+        <div class="stat-num">2026</div>
+        <div style="font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:#86B4C4; margin-top:4px;" data-i18n="stats.edition">Edizioa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="quienes" class="py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-20 items-center">
+      <!-- Left -->
+      <div class="fade-in">
+        <div class="section-label deco-line mb-4" data-i18n="about.label">Guri Buruz</div>
+        <h2 class="section-title text-6xl md:text-7xl text-gray-900 mb-8"><span data-i18n="about.title1">Nor</span><br><span style="color:#86B4C4;" data-i18n="about.title2">Gara</span></h2>
+        <p class="text-gray-500 text-base leading-relaxed mb-6" style="font-weight:300;" data-i18n="about.p1">
+          GAKO gara talde ekintzaile bat, gure lurraldearen etorkizuna <strong style="color:#598196; font-weight:600;">sormena</strong>, <strong style="color:#598196; font-weight:600;">berrikuntza</strong> eta <strong style="color:#598196; font-weight:600;">ilusioa</strong>ren bidez sortu eta zaintzeko konpromiso sendoa duena.
+        </p>
+        <a href="#" onclick="goTo('proyectos'); return false;" class="btn-primary" data-i18n="about.btn">Gure lana ezagutu</a>
+      </div>
+
+      <!-- Right: pillars -->
+      <div class="fade-in grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="bg-[#CCE9F6]/40 rounded-2xl p-6 border border-[#B1E0F4]">
+          <div class="w-10 h-10 rounded-lg bg-[#86B4C4] flex items-center justify-center mb-4">
+            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="section-title text-2xl text-gray-800 mb-2" data-i18n="about.pillar1.title">Maitasuna</h3>
+          <p class="text-gray-500 text-sm leading-relaxed" style="font-weight:300;" data-i18n="about.pillar1.desc">Pasioa gure motorra da proiektu bakoitzean.</p>
+        </div>
+
+        <div class="bg-[#598196]/10 rounded-2xl p-6 border border-[#86B4C4]/30">
+          <div class="w-10 h-10 rounded-lg bg-[#598196] flex items-center justify-center mb-4">
+            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="section-title text-2xl text-gray-800 mb-2" data-i18n="about.pillar2.title">Ilusioa</h3>
+          <p class="text-gray-500 text-sm leading-relaxed" style="font-weight:300;" data-i18n="about.pillar2.desc">Berrikuntza sortzeko gogo bizia.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-[#CCE9F6] shadow-sm">
+          <div class="w-10 h-10 rounded-lg bg-[#B1E0F4] flex items-center justify-center mb-4">
+            <svg width="20" height="20" fill="none" stroke="#3d6070" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="section-title text-2xl text-gray-800 mb-2" data-i18n="about.pillar3.title">Konpromezua</h3>
+          <p class="text-gray-500 text-sm leading-relaxed" style="font-weight:300;" data-i18n="about.pillar3.desc">Lurraldearekiko eta pertsonekiko leialtasuna.</p>
+        </div>
+
+        <div class="bg-[#CCE9F6]/40 rounded-2xl p-6 border border-[#B1E0F4]">
+          <div class="w-10 h-10 rounded-lg bg-[#86B4C4] flex items-center justify-center mb-4">
+            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3 class="section-title text-2xl text-gray-800 mb-2" data-i18n="about.pillar4.title">Indarra</h3>
+          <p class="text-gray-500 text-sm leading-relaxed" style="font-weight:300;" data-i18n="about.pillar4.desc">Erronka guztien aurrean ambizioz jokatzea.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div>
+
+<!-- ████████ EQUIPO ████████ -->
+<div id="page-equipo" class="page">
+<section id="equipo" class="py-28" style="background: #f8fbfd;">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="text-center mb-16 fade-in">
+      <div class="section-label mb-3" data-i18n="team.label">Gure Taldea</div>
+      <h2 class="section-title text-6xl md:text-7xl text-gray-900"><span data-i18n="team.title1">Gure</span> <span style="color:#86B4C4;" data-i18n="team.title2">Taldea</span></h2>
+      <p class="text-gray-500 mt-4 max-w-xl mx-auto" style="font-weight:300;" data-i18n="team.subtitle">
+        Talde askotarikoa, pasioduna eta misio amankomunarekin: pertsonak eta erakundeak elkarrekin urrunago iristeko.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 fade-in">
+
+      <!-- Lore Atondo -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/lore-atondo.jpg" alt="Lore Atondo" style="width:100%; height:100%; object-fit:cover; object-position:top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/lore-atondo-61b7bb36a/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Lore Atondo</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Berrikuntza Soziala · Kooperatibismoa</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Pertsonek beren ingurunea eraldatzeko duten ahalmena sinisten du. Bizitzari, zaintzari eta komunitateari zuzendutako berrikuntza sozialeko proiektuak bultzatzen ditu, etxebizitza, kooperatibismoa, feminismoa eta berdintasuna ardatz hartuta." data-es="Cree en el poder de las personas para transformar su entorno. Impulsa proyectos de innovación social centrados en la vida, los cuidados y la comunidad, con foco en vivienda, cooperativismo, feminismo e igualdad." data-en="She believes in the power of people to transform their environment. She drives social innovation projects focused on life, care and community, with a focus on housing, cooperativism, feminism and equality.">Pertsonek beren ingurunea eraldatzeko duten ahalmena sinisten du. Bizitzari, zaintzari eta komunitateari zuzendutako berrikuntza sozialeko proiektuak bultzatzen ditu, etxebizitza, kooperatibismoa, feminismoa eta berdintasuna ardatz hartuta.</p>
+          <a href="https://www.linkedin.com/in/lore-atondo-61b7bb36a/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Lore Atondo" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Mawete Barros -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/mawete-barros.jpg" alt="Mawete Barros" style="width:100%; height:100%; object-fit:cover; object-position:top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/mawete-barros-soto-68179b309/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Mawete Barros</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Musika Industria · Eragin Soziala</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Musika industrian eta gizarte-proiektuen garapenean espezializatua. Estrategia kulturala eta komunitate-eragina uztartzen ditu musikak errealitatea eraldatzen eta gizarte-aldaketa erreala sortzen duen ekimenak diseinatzeko." data-es="Especializado en la industria musical y el desarrollo de proyectos sociales. Fusiona estrategia cultural e impacto comunitario para diseñar iniciativas donde la música transforma realidades y genera cambio social real." data-en="Specialised in the music industry and the development of social projects. He fuses cultural strategy and community impact to design initiatives where music transforms realities and generates real social change.">Musika industrian eta gizarte-proiektuen garapenean espezializatua. Estrategia kulturala eta komunitate-eragina uztartzen ditu musikak errealitatea eraldatzen eta gizarte-aldaketa erreala sortzen duen ekimenak diseinatzeko.</p>
+          <a href="https://www.linkedin.com/in/mawete-barros-soto-68179b309/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Mawete Barros" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Eneko Miguelez -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/eneko-miguelez.jpg" alt="Eneko Miguelez" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/eneko-miguelez-irisarri-308b32313/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Eneko Miguelez</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Erraztailea · DT</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Alaia eta jakin-mina, ideiak konektatzea eta esperientziatik ikastea gustatzen zaio. Familia, lagunak eta kirola dira bere oinarriak. Akatsa ikaste eta pertsonalki hazteko funtsezko parte gisa ikusten du." data-es="Alegre y curioso, disfruta conectar ideas y aprender desde la experiencia. Su familia, amistades y el deporte son pilares clave. Ve el error como parte esencial del aprendizaje y el crecimiento personal." data-en="Cheerful and curious, he enjoys connecting ideas and learning from experience. Family, friends and sport are key pillars. He sees mistakes as an essential part of learning and personal growth.">Alaia eta jakin-mina, ideiak konektatzea eta esperientziatik ikastea gustatzen zaio. Familia, lagunak eta kirola dira bere oinarriak. Akatsa ikaste eta pertsonalki hazteko funtsezko parte gisa ikusten du.</p>
+          <a href="https://www.linkedin.com/in/eneko-miguelez-irisarri-308b32313/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Eneko Miguelez" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Amets Lanchas -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/amets-lanchas.jpg" alt="Amets Lanchas" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/amets-lanchas-1a0258328/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Amets Lanchas</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Kultura · Osasun Mentala · Musika</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Oreretako ekintzaile bat, leialtasunak, apaltasunak eta errespetua gidatzen duena. Musika eta kirolak pasionatzen dute, eta musikatik bizi nahi du. Komunitate hirian arrastoa uzteko erronken bila beti." data-es="Emprendedor de Orereta guiado por la lealtad, la humildad y el respeto. Le apasionan la música y el deporte, y aspira a vivir de la música. Siempre en busca de retos que le permitan crecer y dejar huella en la comunidad." data-en="Entrepreneur from Orereta guided by loyalty, humility and respect. Passionate about music and sport, he aspires to live from music. Always in search of challenges that allow him to grow and leave a mark on the community.">Oreretako ekintzaile bat, leialtasunak, apaltasunak eta errespetua gidatzen duena. Musika eta kirolak pasionatzen dute, eta musikatik bizi nahi du. Komunitate hirian arrastoa uzteko erronken bila beti.</p>
+          <a href="https://www.linkedin.com/in/amets-lanchas-1a0258328/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Amets Lanchas" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Amets Vazquez -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/amets-vazquez.jpg" alt="Amets Vazquez" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/amets-v%C3%A1zquez-roig-76393036a/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Amets Vazquez</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Kultura · Berrikuntza Soziala · Lidergo</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Kultura eta gizarte-garapena lotzen dituen proiektuen kudeatzaile integrala. Hstlr.Records-en sortzaile, etxebizitza kooperatibotik nazioarteko komunitate ahuletan eragina duten ekimenetara bultzatzen du." data-es="Gestora integral de proyectos que une cultura y desarrollo social. Cocreadora de Hstlr.Records, impulsa desde vivienda cooperativa hasta iniciativas de impacto en comunidades vulnerables internacionales." data-en="Integral project manager uniting culture and social development. Co-creator of Hstlr.Records, she drives initiatives from cooperative housing to impact projects in international vulnerable communities.">Kultura eta gizarte-garapena lotzen dituen proiektuen kudeatzaile integrala. Hstlr.Records-en sortzaile, etxebizitza kooperatibotik nazioarteko komunitate ahuletan eragina duten ekimenetara bultzatzen du.</p>
+          <a href="https://www.linkedin.com/in/amets-v%C3%A1zquez-roig-76393036a/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Amets Vazquez" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Xabier Isuskitza -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/xabier-isuskitza.jpg" alt="Xabier Isuskitza" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/xabier-isuskitza/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Xabier Isuskitza</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Aholkularitza · Berrikuntza Soziala</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Aholkularitzan eta berrikuntza sozialean espezializatua. Eragin positiboa sortzen duten proiektuak eta estrategiak garatzen ditu, erakundeei ideiak gizartearentzat irtenbide jasangarri eta baliotsutan bihurtzen lagunduz." data-es="Especializado en consultoría e innovación social. Desarrolla proyectos y estrategias que generan impacto positivo, ayudando a organizaciones a transformar ideas en soluciones sostenibles y de valor para la sociedad." data-en="Specialised in consultancy and social innovation. He develops projects and strategies that generate positive impact, helping organisations transform ideas into sustainable, valuable solutions for society.">Aholkularitzan eta berrikuntza sozialean espezializatua. Eragin positiboa sortzen duten proiektuak eta estrategiak garatzen ditu, erakundeei ideiak gizartearentzat irtenbide jasangarri eta baliotsutan bihurtzen lagunduz.</p>
+          <a href="https://www.linkedin.com/in/xabier-isuskitza/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Xabier Isuskitza" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Inge Jimenez -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/inge-jimenez.jpg" alt="Inge Jimenez" style="width:100%; height:100%; object-fit:cover; object-position:top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/inge-jimenez-aritzeta-4a7912313/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Inge Jimenez</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Komunikazioa · Branding · Proiektuak</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Komunikazioan, brandingean eta proiektuen kudeaketan espezializatua, sortzaile eta estrategikoa. Berrikuntza, jasangarritasuna eta sormena uztartuz pertsonak lotzen dituzten estrategiak eta esperientziak sortzen ditu." data-es="Creativa y estratégica, especializada en comunicación, branding y gestión de proyectos. Apasionada por crear estrategias y experiencias que conecten con las personas, combinando innovación, sostenibilidad y creatividad." data-en="Creative and strategic, specialised in communication, branding and project management. Passionate about creating strategies and experiences that connect with people, combining innovation, sustainability and creativity.">Komunikazioan, brandingean eta proiektuen kudeaketan espezializatua, sortzaile eta estrategikoa. Berrikuntza, jasangarritasuna eta sormena uztartuz pertsonak lotzen dituzten estrategiak eta esperientziak sortzen ditu.</p>
+          <a href="https://www.linkedin.com/in/inge-jimenez-aritzeta-4a7912313/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Inge Jimenez" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Garazi Moreno -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/garazi-moreno.jpg" alt="Garazi Moreno" style="width:100%; height:100%; object-fit:cover; object-position:top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/garazi-moreno-alvarez-30b97532a/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Garazi Moreno</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Komunikazioa · Marketing · Diseinua</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Esperientziak diseinatzen, markak eraikitzen eta garrantzia duten istorioak kontatzen espezializatua. Estrategia komunikatiboa eta erabiltzaile-esperientzia uztartzen ditu, enpresen xedea pertsonetara iristeko." data-es="Especializada en diseñar experiencias, construir marcas y contar historias que importan. Fusiona comunicación estratégica y experiencia de usuario para que el propósito de las empresas conecte de verdad con las personas." data-en="Specialised in designing experiences, building brands and telling stories that matter. She fuses strategic communication and user experience so that companies' purpose genuinely connects with people.">Esperientziak diseinatzen, markak eraikitzen eta garrantzia duten istorioak kontatzen espezializatua. Estrategia komunikatiboa eta erabiltzaile-esperientzia uztartzen ditu, enpresen xedea pertsonetara iristeko.</p>
+          <a href="https://www.linkedin.com/in/garazi-moreno-alvarez-30b97532a/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Garazi Moreno" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Eider Arregui -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/eider-arregui.jpg" alt="Eider Arregui" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/eider-arregui-fominaya-86ab31313/?skipRedirect=true" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Eider Arregui</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Gizarte Ekintzailetza · Marketing Digitala</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Arte, kultura eta marketing digitala eragin sozialeko proiektuetan integratzeaz pasiodun ekintzaile gaztea. Autentikotasunez eta konpromisoaz komunitatea sortzen eta ingurunea eraldatzen duten ekimenak sortzen ditu." data-es="Joven emprendedora apasionada por integrar el arte, la cultura y el marketing digital en proyectos de impacto social. Crea iniciativas que generan comunidad y transforman el entorno con autenticidad y compromiso." data-en="Young entrepreneur passionate about integrating art, culture and digital marketing in social impact projects. She creates initiatives that generate community and transform the environment with authenticity and commitment.">Arte, kultura eta marketing digitala eragin sozialeko proiektuetan integratzeaz pasiodun ekintzaile gaztea. Autentikotasunez eta konpromisoaz komunitatea sortzen eta ingurunea eraldatzen duten ekimenak sortzen ditu.</p>
+          <a href="https://www.linkedin.com/in/eider-arregui-fominaya-86ab31313/?skipRedirect=true" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Eider Arregui" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Martin Ordoñez -->
+      <div class="team-card bg-white rounded-2xl overflow-hidden border border-[#CCE9F6] text-center">
+        <div style="height:260px; overflow:hidden;">
+          <img src="images/equipo/martin-ordonez.jpg" alt="Martin Ordoñez" style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+        </div>
+        <div class="p-4">
+          <h3 class="font-semibold text-gray-800 text-sm mb-0.5"><a href="https://www.linkedin.com/in/martin-ord%C3%B3%C3%B1ez-saizar-b43312206/" target="_blank" rel="noopener noreferrer" class="hover:text-[#598196] transition-colors">Martin Ordoñez</a></h3>
+          <p class="text-xs text-[#86B4C4] font-medium uppercase tracking-wider mb-2">Komunikazioa · Dibulgazioa · Aholkularitza</p>
+          <p class="text-gray-400 text-xs leading-relaxed" data-eu="Berezko izaera sortzailea duen ekintzaile bat, komunikazioan, dibulgazioan eta aholkularitzan espezializatua. Irudikatzea, eraikitzea eta diseinua eta sormena motor gisa erabiliz komunitateekin konektatzea gustatzen zaio." data-es="Emprendedor con espíritu creativo innato, especializado en comunicación, divulgación y consultoría. Le encanta imaginar, construir y conectar con las comunidades usando el diseño y la creatividad como fuerza motora." data-en="Entrepreneur with an innate creative spirit, specialised in communication, outreach and consultancy. He loves imagining, building and connecting with communities using design and creativity as a driving force.">Berezko izaera sortzailea duen ekintzaile bat, komunikazioan, dibulgazioan eta aholkularitzan espezializatua. Irudikatzea, eraikitzea eta diseinua eta sormena motor gisa erabiliz komunitateekin konektatzea gustatzen zaio.</p>
+          <a href="https://www.linkedin.com/in/martin-ord%C3%B3%C3%B1ez-saizar-b43312206/" target="_blank" rel="noopener noreferrer" class="team-linkedin" aria-label="LinkedIn · Martin Ordoñez" title="LinkedIn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+</div>
+
+<!-- ████████ PROYECTOS ████████ -->
+<div id="page-proyectos" class="page">
+
+<section id="proyectos" class="py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 fade-in">
+      <div>
+        <div class="section-label mb-3" data-i18n="projects.label">Gure Proiektuak</div>
+        <h2 class="section-title text-6xl md:text-7xl text-gray-900"><span data-i18n="projects.title1">Gure</span><br><span style="color:#86B4C4;" data-i18n="projects.title2">Proiektuak</span></h2>
+      </div>
+      <p class="text-gray-500 max-w-sm text-sm leading-relaxed" style="font-weight:300;" data-i18n="projects.subtitle">
+        Sormena, eragin soziala eta estrategia uztartzen dituzten proiektu errealak. Klikatu arlo bakoitzean ezagutzeko.
+      </p>
+    </div>
+
+    <div class="flex flex-col gap-4 fade-in">
+
+      <!-- ─── ÁMBITO 1: Aholkularitza eta Komunikazioa ─── -->
+      <div class="accordion-item" id="acc-1">
+        <button class="accordion-btn" onclick="toggleAccordion('acc-1')" aria-expanded="false">
+          <div class="flex items-center gap-5 min-w-0">
+            <span class="accordion-number">01</span>
+            <div>
+              <div class="accordion-cat-title" data-es="Consultoría y Comunicación" data-eu="Aholkularitza eta Komunikazioa" data-en="Consulting &amp; Communication">Consultoría y Comunicación</div>
+              <div class="accordion-cat-sub" data-es="5 proyectos" data-eu="5 proiektu" data-en="5 projects">5 proyectos</div>
+            </div>
+          </div>
+          <div class="accordion-icon">
+            <svg width="16" height="16" fill="none" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </button>
+        <div class="accordion-panel" id="panel-acc-1">
+          <div style="border-top: 1px solid #e8f4fb;">
+
+            <!-- BAT IZAN -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/bat-izan.png" alt="BAT IZAN logo" loading="lazy">
+                <div class="proj-name">BAT IZAN</div>
+              </div>
+              <p class="proj-desc" data-es="Somos una agencia de marketing digital dedicada al desarrollo de marca y creación de contenido. En BAT IZAN conectamos con las nuevas plataformas para transformar la comunicación de tu marca. Somos un equipo joven con una visión actual y clara, apostando por herramientas digitales avanzadas para crear propuestas eficaces, creativas y adaptadas a las necesidades de cada marca." data-eu="Marketin digitaleko agentzia gara, markak garatzen eta edukiak sortzen dituena. BAT IZANen plataforma berriekin konektatzen dugu zure markaren komunikazioa eraldatzeko. Proiektu hau gaur egungo ikuspegi argiarekin garatzen dugun talde gaztea gara, marka bakoitzaren beharretara egokitutako proposamen pertsonalizatuak eskainiz." data-en="We are a digital marketing agency focused on brand development and content creation. At BAT IZAN we connect with new platforms to transform your brand's communication. We are a young team with a clear, up-to-date vision, offering personalised solutions tailored to each brand's needs.">Somos una agencia de marketing digital dedicada al desarrollo de marca y creación de contenido. En BAT IZAN conectamos con las nuevas plataformas para transformar la comunicación de tu marca. Somos un equipo joven con una visión actual y clara, apostando por herramientas digitales avanzadas para crear propuestas eficaces, creativas y adaptadas a las necesidades de cada marca.</p>
+            </div>
+
+            <!-- MERKATU IKERKETA -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">MERKATU IKERKETA</div>
+              </div>
+              <p class="proj-desc" data-es="En Gako ofrecemos soluciones para ayudar a las empresas a identificar nuevas oportunidades, validar la entrada en nuevos países y tomar decisiones estratégicas con una visión clara y práctica. Somos una consultora de internacionalización formada por jóvenes emprendedores. Acompañamos a las empresas en su proceso de expansión a mercados globales, analizando de forma estructurada y eficaz las oportunidades de crecimiento. Nuestro trabajo no se basa solo en aportar información, sino en ofrecer un análisis profundo y orientación accionable para tomar decisiones con seguridad." data-eu="Gakon, enpresei aukera berriak identifikatzen, herrialde berrietara sartzea baliozkotzen eta erabaki estrategikoak ikuspegi argi eta praktiko batekin hartzen laguntzen ditugu. Nazioartekotze-aholkularitza gara, gazte ekintzaileek osatua. Enpresei merkatu globaletara zabaltzeko prozesuan laguntzen diegu, hazkunde-aukerak modu egituratu eta eraginkorrean aztertuz. Gure lana ez da soilik informazioa ematea, baizik eta analisi sakona eta ekintzarako orientazioa eskaintzea." data-en="At Gako we help companies identify new opportunities, validate entry into new markets and make strategic decisions with a clear, practical vision. We are an internationalisation consultancy made up of young entrepreneurs. We support businesses in their global expansion, analysing growth opportunities in a structured and effective way.">En Gako ofrecemos soluciones para ayudar a las empresas a identificar nuevas oportunidades, validar la entrada en nuevos países y tomar decisiones estratégicas con una visión clara y práctica. Somos una consultora de internacionalización formada por jóvenes emprendedores. Acompañamos a las empresas en su proceso de expansión a mercados globales, analizando de forma estructurada y eficaz las oportunidades de crecimiento. Nuestro trabajo no se basa solo en aportar información, sino en ofrecer un análisis profundo y orientación accionable para tomar decisiones con seguridad.</p>
+            </div>
+
+            <!-- KLINBIT -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/klinbit.png" alt="KLINBIT logo" loading="lazy">
+                <div class="proj-name">KLINBIT</div>
+              </div>
+              <p class="proj-desc" data-es="Somos una consultora de sostenibilidad y agencia de comunicación verde para festivales y eventos culturales. En Klinbit ayudamos a los eventos a medir y reducir su impacto ambiental y a comunicarlo con transparencia, con campañas alejadas del greenwashing. Creemos en la comunidad, el impacto, la transparencia y el ritmo." data-eu="Jaialdi eta ekitaldi kulturaletarako iraunkortasun-aholkularitza eta komunikazio berdeko agentzia gara. Klinbit-en ekitaldiei beren ingurumen-inpaktua neurtzen eta murrizten laguntzen diegu, baita gardentasunez komunikatzen ere, greenwashing-etik urrun dauden kanpainen bidez. Komunitatean, inpaktuan, gardentasunean eta erritmoan sinesten dugu." data-en="We are a sustainability consultancy and green communication agency for festivals and cultural events. At Klinbit we help events measure and reduce their environmental impact and communicate it transparently, through campaigns far removed from greenwashing. We believe in community, impact, transparency and rhythm.">Somos una consultora de sostenibilidad y agencia de comunicación verde para festivales y eventos culturales. En Klinbit ayudamos a los eventos a medir y reducir su impacto ambiental y a comunicarlo con transparencia, con campañas alejadas del greenwashing. Creemos en la comunidad, el impacto, la transparencia y el ritmo.</p>
+            </div>
+
+            <!-- BRAVEA (antes EVOSHION) -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">BRAVEA</div>
+              </div>
+              <p class="proj-desc" data-es="Bravea fusiona innovación, sostenibilidad y cultura para transformar la industria de la moda desde dos frentes complementarios: empresas (B2B) y sociedad (B2C). Nuestra propuesta se basa en un ecosistema sostenible e inclusivo, donde las empresas transforman su manera de producir y los consumidores aprenden a transformar su manera de consumir. Conectamos innovación y educación: creamos soluciones tangibles para marcas y experiencias transformadoras para las personas." data-eu="Braveak berrikuntza, jasangarritasuna eta kultura uztartzen ditu modaren industria bi alderdi osagarrietatik eraldatzeko: enpresak (B2B) eta gizartea (B2C). Gure proposamena ekosistema jasangarri eta inklusibo batean oinarritzen da, non enpresei ekoizten eta kontsumitzaileei kontsumitzen ikasteko esperientziak eskaintzen dizkieguun. Berrikuntza eta hezkuntza lotzen ditugu." data-en="Bravea fuses innovation, sustainability and culture to transform the fashion industry from two complementary fronts: businesses (B2B) and society (B2C). Our proposal is based on a sustainable, inclusive ecosystem where companies transform how they produce and consumers learn to transform how they consume. We connect innovation and education.">Bravea fusiona innovación, sostenibilidad y cultura para transformar la industria de la moda desde dos frentes complementarios: empresas (B2B) y sociedad (B2C). Nuestra propuesta se basa en un ecosistema sostenible e inclusivo, donde las empresas transforman su manera de producir y los consumidores aprenden a transformar su manera de consumir. Conectamos innovación y educación: creamos soluciones tangibles para marcas y experiencias transformadoras para las personas.</p>
+            </div>
+
+            <!-- ANÁLISIS DE IMPACTO SOCIO-ECONÓMICO DE EVENTOS -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name" data-es="Análisis de Impacto Socio-Económico de Eventos" data-eu="Ekitaldien Eragin Sozioekonomikoen Analisia" data-en="Socio-Economic Impact Analysis of Events">Análisis de Impacto Socio-Económico de Eventos</div>
+              </div>
+              <p class="proj-desc" data-es="Transformamos datos en conocimiento estratégico mediante el análisis riguroso del impacto socio-económico de tus eventos. Identificamos el retorno tangible y el legado intangible generado en el entorno, permitiéndote tomar decisiones informadas y maximizar la rentabilidad social y económica de cada iniciativa." data-eu="Datuak ezagutza estrategiko bihurtzen ditugu zure ekitaldien eragin sozioekonomikoa zorrotz aztertuz. Ingurunean sortutako itzulera ukigarria eta ondare ukiezina identifikatzen ditugu, erabaki informatuak hartu eta ekimen bakoitzaren errentagarritasun soziala eta ekonomikoa maximizatzeko." data-en="We transform data into strategic knowledge through rigorous analysis of the socio-economic impact of your events. We identify the tangible return and intangible legacy generated in the environment, enabling informed decisions and maximising the social and economic profitability of each initiative.">Transformamos datos en conocimiento estratégico mediante el análisis riguroso del impacto socio-económico de tus eventos. Identificamos el retorno tangible y el legado intangible generado en el entorno, permitiéndote tomar decisiones informadas y maximizar la rentabilidad social y económica de cada iniciativa.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ÁMBITO 2: Eraldaketa Soziala ─── -->
+      <div class="accordion-item" id="acc-2">
+        <button class="accordion-btn" onclick="toggleAccordion('acc-2')" aria-expanded="false">
+          <div class="flex items-center gap-5 min-w-0">
+            <span class="accordion-number">02</span>
+            <div>
+              <div class="accordion-cat-title" data-es="Transformación Social" data-eu="Eraldaketa Soziala" data-en="Social Transformation">Transformación Social</div>
+              <div class="accordion-cat-sub" data-es="4 proyectos" data-eu="4 proiektu" data-en="4 projects">4 proyectos</div>
+            </div>
+          </div>
+          <div class="accordion-icon">
+            <svg width="16" height="16" fill="none" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </button>
+        <div class="accordion-panel" id="panel-acc-2">
+          <div style="border-top: 1px solid #e8f4fb;">
+
+            <!-- AHOTSAK -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">AHOTSAK</div>
+              </div>
+              <p class="proj-desc" data-es="AHOTSAK es una intervención cultural, educativa y social diseñada para recuperar, proteger y visibilizar las lenguas, memorias y culturas minoritarias que conviven en Gipuzkoa. El proyecto combina producción audiovisual, mediación expositiva, creación escénica y recursos pedagógicos, para crear experiencias accesibles y emocionales que activen a la ciudadanía y promuevan la empatía, la diversidad y la interculturalidad." data-eu="AHOTSAK esku-hartze kultural, hezitzaile eta soziala da, Gipuzkoan elkarrekin bizi diren hizkuntza, memoria eta kultura gutxituak berreskuratu, babestu eta ikusarazteko diseinatua. Proiektuak ikus-entzunezko ekoizpena, erakusketa-bitartekaritza, sorkuntza eszenikoa eta baliabide pedagogikoak uztartzen ditu, esperientzia irisgarriak eta emozionalak sortzeko." data-en="AHOTSAK is a cultural, educational and social intervention designed to recover, protect and make visible the minority languages, memories and cultures that coexist in Gipuzkoa. The project combines audiovisual production, exhibition mediation, scenic creation and pedagogical resources to create accessible and emotional experiences.">AHOTSAK es una intervención cultural, educativa y social diseñada para recuperar, proteger y visibilizar las lenguas, memorias y culturas minoritarias que conviven en Gipuzkoa. El proyecto combina producción audiovisual, mediación expositiva, creación escénica y recursos pedagógicos, para crear experiencias accesibles y emocionales que activen a la ciudadanía y promuevan la empatía, la diversidad y la interculturalidad.</p>
+            </div>
+
+            <!-- AMORE -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">AMORE</div>
+              </div>
+              <p class="proj-desc" data-es="AMORE es una herramienta digital y social basada en la recopilación de datos reales para garantizar el derecho a la vivienda, promoviendo cooperativas de vivienda y modelos de cesión de uso. Trabaja en colaboración con instituciones públicas y agentes implicados en proyectos sociales, con el objetivo de desarrollar modelos habitacionales basados en la vida comunitaria que fortalezcan el barrio, mantengan precios asequibles y aporten soluciones innovadoras." data-eu="AMORE datu bilketa errealetan oinarritutako tresna digital eta soziala da, etxebizitza eskubidea bermatzeko, etxebizitza kooperatibak eta erabilera-lagapeneko ereduak sustatuz. Instituzio publikoekin eta gizarte-proiektuetan inplikatutako eragileekin elkarlanean, auzo-bizitzan oinarritutako etxebizitza-eredu sozialak garatzen ditu." data-en="AMORE is a digital and social tool based on real data collection to guarantee the right to housing, promoting housing cooperatives and use-assignment models. Working with public institutions and social project stakeholders, it develops community-based housing models that strengthen neighbourhoods and provide innovative solutions.">AMORE es una herramienta digital y social basada en la recopilación de datos reales para garantizar el derecho a la vivienda, promoviendo cooperativas de vivienda y modelos de cesión de uso. Trabaja en colaboración con instituciones públicas y agentes implicados en proyectos sociales, con el objetivo de desarrollar modelos habitacionales basados en la vida comunitaria que fortalezcan el barrio, mantengan precios asequibles y aporten soluciones innovadoras.</p>
+            </div>
+
+            <!-- KEMAN -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">KEMAN</div>
+              </div>
+              <p class="proj-desc" data-es="KEMAN nace de la necesidad de crear espacios seguros y reales donde las mujeres se sientan escuchadas, protegidas y libres de expresarse. El proyecto usa el arte y la cultura como herramienta de cuidado, encuentro y transformación social. A través de talleres, materiales culturales y espacios comunitarios, KEMAN convierte la creatividad en una red de conexión, sanación y apoyo mutuo." data-eu="KEMAN emakumeak entzunak, babestuak eta beren burua adierazteko aske sentituko diren gune seguru eta errealak sortzeko beharretik jaio da. Proiektuak artea eta kultura zaintzarako, topaketarako eta gizarte-eraldaketarako tresna gisa erabiltzen ditu. Tailerren, kultur materialen eta komunitate-guneen bidez, sormena elkar konektatzeko eta elkarri laguntzeko sareak eraikitzeko modu bihurtzen du." data-en="KEMAN was born from the need to create safe, real spaces where women feel heard, protected and free to express themselves. The project uses art and culture as tools for care, encounter and social transformation. Through workshops, cultural materials and community spaces, creativity becomes a network of connection and mutual support.">KEMAN nace de la necesidad de crear espacios seguros y reales donde las mujeres se sientan escuchadas, protegidas y libres de expresarse. El proyecto usa el arte y la cultura como herramienta de cuidado, encuentro y transformación social. A través de talleres, materiales culturales y espacios comunitarios, KEMAN convierte la creatividad en una red de conexión, sanación y apoyo mutuo.</p>
+            </div>
+
+            <!-- KUIR -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/kuir.png" alt="KUIR logo" loading="lazy">
+                <div class="proj-name">KUIR</div>
+              </div>
+              <p class="proj-desc" data-es="Kuir es un proyecto creado para visibilizar y sensibilizar sobre la realidad de las personas LGTB, con tres líneas de trabajo: emprendizaje (espacios para analizar el mundo laboral poniendo a las personas LGTB en el centro), educación (escape rooms para transmitir conocimiento y normalización a jóvenes) y creación (una exposición de arte con artistas vascos para mostrar la historia del movimiento LGTB)." data-eu="Kuir LGTB pertsonen errealitatea ikusarazteko eta sentsibilizatzeko sortutako proiektua da, 3 lan lerro nagusirekin: ekintzailetza (LGTB pertsonak erdigunean jarriz lan mundua aztertzeko espazioak), hezkuntza (gazte/nerabeentzako scape roomak) eta sorkuntza (euskal artistekin LGTB mugimenduaren historia erakusteko arte erakusketa)." data-en="Kuir is a project created to raise visibility and awareness of LGBT people's reality, with three lines of work: entrepreneurship (spaces to analyse the world of work centring LGBT people), education (escape rooms to transmit knowledge and normalisation to young people) and creation (an art exhibition with Basque artists showing the history of the LGBT movement).">Kuir es un proyecto creado para visibilizar y sensibilizar sobre la realidad de las personas LGTB, con tres líneas de trabajo: emprendizaje (espacios para analizar el mundo laboral poniendo a las personas LGTB en el centro), educación (escape rooms para transmitir conocimiento y normalización a jóvenes) y creación (una exposición de arte con artistas vascos para mostrar la historia del movimiento LGTB).</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── ÁMBITO 3: Sorkuntza eta Kultura ─── -->
+      <div class="accordion-item" id="acc-3">
+        <button class="accordion-btn" onclick="toggleAccordion('acc-3')" aria-expanded="false">
+          <div class="flex items-center gap-5 min-w-0">
+            <span class="accordion-number">03</span>
+            <div>
+              <div class="accordion-cat-title" data-es="Creación y Cultura" data-eu="Sorkuntza eta Kultura" data-en="Creation &amp; Culture">Creación y Cultura</div>
+              <div class="accordion-cat-sub" data-es="4 proyectos" data-eu="4 proiektu" data-en="4 projects">4 proyectos</div>
+            </div>
+          </div>
+          <div class="accordion-icon">
+            <svg width="16" height="16" fill="none" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        </button>
+        <div class="accordion-panel" id="panel-acc-3">
+          <div style="border-top: 1px solid #e8f4fb;">
+
+            <!-- HSTLR -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/hstlr.png" alt="HSTLR logo" loading="lazy">
+                <div class="proj-name">HSTLR</div>
+              </div>
+              <p class="proj-desc" data-es="HSTLR es un movimiento de música urbana nacido en Donostia que busca impulsar el talento emergente y fortalecer la cultura urbana local a través de la música, el arte y la comunidad. Nuestro objetivo es ofrecer espacios de expresión y visibilidad a jóvenes artistas, especialmente aquellos que no encuentran oportunidades dentro de los circuitos tradicionales. A través de eventos, sesiones y acciones culturales, promovemos valores como la inclusión, la diversidad y la colaboración." data-eu="HSTLR Donostian jaiotako musika urbanoaren mugimendu bat da, sortu berria den talentua bultzatzea eta tokiko kultura urbanoa indartzea helburu duena, musika, artea eta komunitatea ardatz hartuta. Gure xedea artista gazteei adierazpenerako eta ikusgaitasunerako guneak eskaintzea da, batez ere bide tradizionalean aukerarik aurkitzen ez dutenei. Ekitaldi, saio eta kultur ekintzen bidez, inklusioa, aniztasuna eta lankidetza bezalako balioak sustatzen ditugu." data-en="HSTLR is an urban music movement born in Donostia that seeks to boost emerging talent and strengthen local urban culture through music, art and community. Our goal is to offer spaces of expression and visibility to young artists, especially those who do not find opportunities in traditional circuits. Through events, sessions and cultural actions, we promote inclusion, diversity and collaboration.">HSTLR es un movimiento de música urbana nacido en Donostia que busca impulsar el talento emergente y fortalecer la cultura urbana local a través de la música, el arte y la comunidad. Nuestro objetivo es ofrecer espacios de expresión y visibilidad a jóvenes artistas, especialmente aquellos que no encuentran oportunidades dentro de los circuitos tradicionales. A través de eventos, sesiones y acciones culturales, promovemos valores como la inclusión, la diversidad y la colaboración.</p>
+            </div>
+
+            <!-- SINEDY -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/sinedy.png" alt="SINEDY logo" loading="lazy">
+                <div class="proj-name">SINEDY</div>
+              </div>
+              <p class="proj-desc" data-es="SINEDY nace de un sueño y de la creencia de que la moda puede generar cambio. Somos una marca con propósito que une diseño, sostenibilidad y comunidad. Creamos bolsos y experiencias, apostando por una moda consciente y responsable. Diseñamos desde la ilusión, la creatividad y por una moda justa. En SINEDY, cada elección forma parte de una nueva manera de vivir la moda." data-eu="SINEDY amets batetik eta modak aldaketa sortzeko duen indarrean sinestetik jaio da. Diseinua, jasangarritasuna eta komunitatea uztartzen dituen marka gara. Poltsak baino gehiago sortzen ditugu: esperientziak, emozioak eta moda kontziente baten aldeko pausoak. Ilusioz, sormenetik eta moda bidezkoago baten alde diseinatzen dugu." data-en="SINEDY was born from a dream and the belief that fashion can generate change. We are a purposeful brand that unites design, sustainability and community. We create bags and experiences, committing to conscious and responsible fashion. We design with passion, creativity and a drive for a fairer fashion industry.">SINEDY nace de un sueño y de la creencia de que la moda puede generar cambio. Somos una marca con propósito que une diseño, sostenibilidad y comunidad. Creamos bolsos y experiencias, apostando por una moda consciente y responsable. Diseñamos desde la ilusión, la creatividad y por una moda justa. En SINEDY, cada elección forma parte de una nueva manera de vivir la moda.</p>
+            </div>
+
+            <!-- FLASH -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <img class="proj-logo" src="images/logos/flash.png" alt="FLASH logo" loading="lazy">
+                <div class="proj-name">FLASH</div>
+              </div>
+              <p class="proj-desc" data-es="En Flash impulsamos la fotografía analógica y experimental como una forma de crear más consciente y un encuentro entre técnica, identidad y experimentación. Apostamos por crear comunidad alrededor de la fotografía y por mantener vivos procesos que todavía tienen mucho que aportar al presente. Hemos colaborado con la Sociedad Fotográfica de Gipuzkoa y el Centro Joven Kontadores, además de llevar el proyecto a destinos como Nueva York, India y Corea del Sur." data-eu="Flashen argazkilaritza analogikoa eta esperimentala sustatzen dugu, sorkuntza modu kontzienteago baten ulertuta eta teknikaren zein esperimentazioaren arteko topagune gisa. Argazkilaritzaren inguruan komunitatea sortzearen alde egiten dugu. GIPUZKOAKO ARGAZKILARITZA ELKARTEArekin eta Kontadores Gazte Zentroarekin elkarlanean aritu gara, baita proiektua New York City, India eta Hego Korearako eraman duten nazioarteko partnerrekin ere." data-en="At Flash we promote analogue and experimental photography as a more conscious way of creating — a meeting point between technique, identity and experimentation. We believe in building community around photography and keeping processes alive that still have much to contribute. We have collaborated with the Gipuzkoa Photographic Society and Centro Joven Kontadores, as well as international partners who have taken the project to New York, India and South Korea.">En Flash impulsamos la fotografía analógica y experimental como una forma de crear más consciente y un encuentro entre técnica, identidad y experimentación. Apostamos por crear comunidad alrededor de la fotografía y por mantener vivos procesos que todavía tienen mucho que aportar al presente. Hemos colaborado con la Sociedad Fotográfica de Gipuzkoa y el Centro Joven Kontadores, además de llevar el proyecto a destinos como Nueva York, India y Corea del Sur.</p>
+            </div>
+
+            <!-- SONDBOX -->
+            <div class="proj-entry px-6 sm:px-10 py-6">
+              <div class="pb-2 sm:pb-0 sm:pr-8 sm:pt-0.5">
+                <div class="proj-name">SONDBOX</div>
+              </div>
+              <p class="proj-desc" data-es="SONDBOX es un ecosistema musical híbrido diseñado para impulsar a DJs y productores de música electrónica. Conectamos el mundo físico y el digital a través de nuestro container studio, llevando un espacio de producción de calidad allí donde la escena necesita. Ofrecemos radio online, streaming y una activa plataforma de networking global, además de formación especializada y consultoría tecnológica centrada en las herramientas más modernas." data-eu="SONDBOX musika elektronikoko DJak eta ekoizleak bultzatzeko diseinatutako musika-ekosistema hibridoa da. Mundu fisikoa eta digitala konektatzen ditugu gure container studio-aren bidez, kalitatezko ekoizpen-espazio bat eszenak behar duen tokira eramanez. Online irratia, streaming-a eta networking plataforma global aktibo bat eskaintzen ditugu, baita prestakuntza espezializatua eta aholkularitza teknologikoa ere." data-en="SONDBOX is a hybrid music ecosystem designed to empower DJs and electronic music producers. We connect the physical and digital worlds through our container studio, bringing a quality production space wherever the scene needs it. We offer online radio, streaming and an active global networking platform, as well as specialised training and technological consultancy.">SONDBOX es un ecosistema musical híbrido diseñado para impulsar a DJs y productores de música electrónica. Conectamos el mundo físico y el digital a través de nuestro container studio, llevando un espacio de producción de calidad allí donde la escena necesita. Ofrecemos radio online, streaming y una activa plataforma de networking global, además de formación especializada y consultoría tecnológica centrada en las herramientas más modernas.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ████████ EXTRANJERO ████████ -->
+<div id="page-extranjero" class="page">
+
+<section id="extranjero" class="py-28" style="background: #f8fbfd;">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-12 fade-in">
+      <div class="section-label mb-3" data-i18n="abroad.label">Atzerriko Egonaldia</div>
+      <h2 class="section-title text-6xl md:text-7xl text-gray-900 mb-4">
+        <span data-i18n="abroad.title1">Gure Atzerriko</span><br>
+        <span data-i18n="abroad.title2">Egonaldia</span> <span style="color:#86B4C4;" data-i18n="abroad.title3">Munduan</span>
+      </h2>
+      <p class="text-gray-500 max-w-xl mx-auto text-base leading-relaxed" style="font-weight:300;" data-i18n="abroad.desc">
+        Ikastera bidaiatzen dugu. Lau helmugatan berrikuntza, UX eta ongizate organizazionaleko ekosistemak esploratu ditugu.
+      </p>
+    </div>
+
+    <!-- Stats -->
+    <div class="flex flex-wrap justify-center gap-6 mb-10 fade-in">
+      <div class="bg-white rounded-xl px-6 py-4 border border-[#CCE9F6] text-center">
+        <div class="section-title text-3xl" style="color:#598196;">4</div>
+        <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium" data-i18n="abroad.stat.countries">Herrialdeak</div>
+      </div>
+      <div class="bg-white rounded-xl px-6 py-4 border border-[#CCE9F6] text-center">
+        <div class="section-title text-3xl" style="color:#598196;">3</div>
+        <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium" data-i18n="abroad.stat.years">Urteak</div>
+      </div>
+      <div class="bg-white rounded-xl px-6 py-4 border border-[#CCE9F6] text-center">
+        <div class="section-title text-3xl" style="color:#598196;">10</div>
+        <div class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-medium" data-i18n="abroad.stat.people">Pertsonak</div>
+      </div>
+    </div>
+
+    <!-- Map + Panel layout -->
+    <div class="fade-in grid lg:grid-cols-5 gap-8 items-start">
+
+      <!-- Map -->
+      <div class="lg:col-span-3">
+        <div class="map-hint mb-3 pl-1">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          <span data-i18n="abroad.map.hint">Egonaldia arakatzeko markagailu bat sakatu</span>
+        </div>
+        <div id="gako-map"></div>
+      </div>
+
+      <!-- Info Panel -->
+      <div class="lg:col-span-2" style="position:sticky; top:90px;">
+
+        <!-- Default state -->
+        <div id="panel-default" class="bg-white rounded-2xl border border-[#CCE9F6] p-8 flex flex-col items-center justify-center text-center min-h-[300px]">
+          <div class="w-16 h-16 rounded-full bg-[#CCE9F6] flex items-center justify-center mb-4">
+            <svg width="28" height="28" fill="none" stroke="#598196" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+          <p class="text-gray-400 text-sm leading-relaxed" style="font-weight:300;" data-i18n="abroad.map.default">Mapa gaineko herrialde bat<br>hautatu gure<br>esperientzia ikusteko</p>
+        </div>
+
+        <!-- Country card -->
+        <div id="country-panel" class="bg-white rounded-2xl border border-[#CCE9F6] overflow-hidden shadow-lg">
+          <div style="position:relative;">
+            <img id="country-img" src="" alt=""/>
+            <div style="position:absolute;top:12px;left:12px;">
+              <span id="country-year" class="tag tag-dark"></span>
+            </div>
+            <div style="position:absolute;top:12px;right:12px;font-size:1.8rem;" id="country-flag"></div>
+          </div>
+          <div class="p-6">
+            <h3 id="country-name" class="section-title text-2xl text-gray-900 mb-1"></h3>
+            <p id="country-subtitle" class="text-xs text-[#86B4C4] font-semibold uppercase tracking-wider mb-4"></p>
+            <p id="country-desc" class="text-gray-500 text-sm leading-relaxed" style="font-weight:300;"></p>
+            <div id="country-tags" class="flex flex-wrap gap-2 mt-4"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ████████ CONTACTO ████████ -->
+<div id="page-contacto" class="page">
+<section id="contacto" class="py-28" style="background: #f8fbfd;">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+      <!-- Left -->
+      <div class="fade-in">
+        <div class="section-label mb-3" data-i18n="contact.label">Jarri Harremanetan</div>
+        <h2 class="section-title text-6xl md:text-7xl text-gray-900 mb-6"><span data-i18n="contact.title1">Hitz egin</span><br><span data-i18n="contact.title2">dezagun</span><br><span style="color:#86B4C4;" data-i18n="contact.title3">proiektuaz</span></h2>
+        <p class="text-gray-500 text-base leading-relaxed mb-10" style="font-weight:300;" data-i18n="contact.desc">
+          Eskuartean duzun erronka kontaiguzu. Zure egoera aztertuko dugu eta zure erakundea eraldatzeko ikuspegi egokiena proposatuko dizugu.
+        </p>
+        <div class="space-y-5">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-[#CCE9F6] flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" fill="none" stroke="#598196" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="text-gray-400 text-xs uppercase tracking-wider font-medium mb-0.5">Email</div>
+              <a href="mailto:gakoteamcompany@gakotc.com" class="text-gray-900 text-sm font-medium hover:text-[#598196] transition-colors">gakoteamcompany@gakotc.com</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-[#CCE9F6] flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" fill="none" stroke="#598196" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="text-gray-400 text-xs uppercase tracking-wider font-medium mb-0.5" data-i18n="contact.location">Kokapena</div>
+              <span class="text-gray-900 text-sm font-medium">Irun, Gipuzkoa · España</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="fade-in">
+        <div class="bg-white rounded-2xl p-8 border border-[#CCE9F6] shadow-lg">
+
+          <!-- Success message -->
+          <div id="form-success" class="items-center gap-4 bg-[#CCE9F6] border border-[#86B4C4] rounded-xl p-5 mb-6">
+            <div class="w-10 h-10 rounded-full bg-[#598196] flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <p class="font-semibold text-[#3d6070] text-sm" data-i18n="contact.success.title">Mezua bidali da!</p>
+              <p class="text-[#598196] text-xs mt-0.5" data-i18n="contact.success.desc">24 orduren buruan harremanetan jarriko gara.</p>
+            </div>
+          </div>
+
+          <form id="contact-form" novalidate>
+            <div class="grid sm:grid-cols-2 gap-5 mb-5">
+              <div>
+                <label class="form-label" for="name">Nombre *</label>
+                <input class="form-input" type="text" id="name" placeholder="Tu nombre" autocomplete="off">
+                <p class="error-msg text-red-400 text-xs mt-1 hidden">Campo requerido</p>
+              </div>
+              <div>
+                <label class="form-label" for="email">Email *</label>
+                <input class="form-input" type="email" id="email" placeholder="tu@empresa.com" autocomplete="off">
+                <p class="error-msg text-red-400 text-xs mt-1 hidden">Email no válido</p>
+              </div>
+            </div>
+            <div class="mb-5">
+              <label class="form-label" for="company">Empresa</label>
+              <input class="form-input" type="text" id="company" placeholder="Nombre de tu empresa" autocomplete="off">
+            </div>
+            <div class="mb-6">
+              <label class="form-label" for="message">Mensaje *</label>
+              <textarea class="form-input resize-none" id="message" rows="4" placeholder="Cuéntanos tu reto o proyecto..."></textarea>
+              <p class="error-msg text-red-400 text-xs mt-1 hidden">Por favor escribe un mensaje</p>
+            </div>
+            <button type="submit" class="btn-primary w-full text-center justify-center" id="submit-btn">
+              Enviar mensaje →
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</div>
+
+<!-- ████████ FOOTER ████████ -->
+<footer id="main-footer" style="background:#1a2d36;" class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="flex items-end gap-1 mb-4">
+          <div class="leading-none">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#86B4C4; letter-spacing:0.08em;">GA</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#598196; letter-spacing:0.08em; margin-top:-4px;">KO</div>
+          </div>
+          <div style="width:5px; height:5px; border-radius:50%; background:#86B4C4; margin-bottom:8px;"></div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs mb-6" style="font-weight:300;" data-i18n="footer.desc">
+          Talde ekintzaile independentea, lurraldearen etorkizuna sormena eta ilusioarekin eraikitzen.
+        </p>
+        <!-- Social -->
+        <div class="flex gap-3">
+          <a href="https://www.linkedin.com/company/gakotc/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links 1 -->
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.company">Enpresa</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="goTo('inicio'); setTimeout(()=>document.getElementById('quienes').scrollIntoView({behavior:'smooth'}),350); return false;" class="footer-link" data-i18n="footer.about">Nor Gara</a></li>
+          <li><a href="#" onclick="goTo('equipo'); return false;" class="footer-link" data-i18n="footer.team">Gure Taldea</a></li>
+          <li><a href="#" onclick="goTo('extranjero'); return false;" class="footer-link" data-i18n="footer.abroad">Atzerriko Egonaldia</a></li>
+        </ul>
+      </div>
+
+      <!-- Links 2 -->
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.services">Zerbitzuak</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="goTo('proyectos'); return false;" class="footer-link" data-i18n="footer.projects">Proiektuak</a></li>
+          <li><a href="#" onclick="goTo('contacto'); return false;" class="footer-link" data-i18n="footer.contact">Kontaktua</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-gray-500 text-xs" data-i18n="footer.copy">Gako © 2026 · Eskubide guztiak erreserbatuta · Irun, Gipuzkoa</p>
+      <div class="flex gap-6">
+        <a href="#" onclick="goTo('privacy'); return false;" class="footer-link" data-i18n="footer.privacy">Pribatutasun Politika</a>
+        <a href="#" onclick="goTo('legal'); return false;" class="footer-link" data-i18n="footer.legal">Lege Oharra</a>
+        <a href="#" onclick="goTo('cookies'); return false;" class="footer-link" data-i18n="footer.cookies">Cookieak</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ████████ JAVASCRIPT ████████ -->
+<!-- ████████ MULTI-PAGE NAVIGATION ████████ -->
+<!-- ████████ I18N SYSTEM ████████ -->
+<!-- ████████ POLÍTICA DE PRIVACIDAD ████████ -->
+<div id="page-privacy" class="page">
+<section class="py-28 bg-white min-h-screen">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <button onclick="history.back()" class="flex items-center gap-2 text-[#598196] text-sm font-medium mb-10 hover:text-[#3d6070] transition-colors group">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="privacy.back">Itzuli</span>
+    </button>
+
+    <div class="text-center mb-16 fade-in">
+      <div class="section-label mb-3" data-i18n="privacy.label">Lege informazioa</div>
+      <h1 class="section-title text-6xl md:text-7xl text-gray-900 mb-4"><span data-i18n="privacy.title">Pribatutasun</span> <span style="color:#86B4C4;">Politika</span></h1>
+    </div>
+
+    <div class="prose-content text-gray-600 text-sm leading-relaxed space-y-6" style="font-weight:300;">
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.who.title">Nor da datu-tratamenduaren arduraduna?</h2>
+        <p data-i18n="privacy.who.text">Pribatutasun politika honek interesdunak GAKOri emandako izaera pertsonaleko datu guztiei eta GAKOk bere web orrien eta komunikazio-bitartekoen bidez eskaintzen dituen jarduera eta zerbitzuetan interesa duten pertsona fisiko guztiei aplikatzen zaie. GAKOren Pribatutasun Politikaren helburua da datu pertsonalen tratamenduari buruzko informazioa gardentasunez aurkeztea, indarreko araudia betez.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.purpose.title">Zein helburutarako tratatzen ditugu zure datu pertsonalak?</h2>
+        <p data-i18n="privacy.purpose.text">GAKOk Tratamenduen Jardueren Erregistro bat du, arduradun gisa egiten dituen tratamendu bakoitza zehaztuz. Tratamenduen Jardueren Erregistroari buruzko informazio gehiago nahi izanez gero, GAKOrekin jar zaitezke harremanetan identifikatutako edozein kanaletan.</p>
+      </div>
+
+      <!-- ████ RAT TABLE ████ -->
+      <div class="mt-8 mb-2">
+        <div class="section-label mb-2" data-i18n="rat.label">Tratamenduen Jardueren Erregistroa</div>
+        <h2 class="section-title text-2xl text-gray-800 mb-1" data-i18n="rat.label"> </h2>
+        <p class="text-xs text-gray-400 mb-5 font-light">ASOCIACIÓN ESTUDIANTIL JUNIOR EMPRESA GAKO · Leandro Agirretxe Plazatxoa, 1, 20304 Irun, Gipuzkoa · 2025/05/27</p>
+
+        <!-- Desktop table -->
+        <div class="hidden md:block overflow-x-auto rounded-2xl border border-[#B1E0F4] shadow-sm">
+          <table class="w-full text-xs" style="border-collapse:collapse;">
+            <thead>
+              <tr style="background:linear-gradient(90deg,#86B4C4,#598196);">
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:130px;" data-i18n="rat.col.activity">Actividad</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:110px;" data-i18n="rat.col.purpose">Finalidad</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:160px;" data-i18n="rat.col.legal">Base jurídica</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:110px;" data-i18n="rat.col.source">Procedencia</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:140px;" data-i18n="rat.col.category">Categoría de datos</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:120px;" data-i18n="rat.col.recipients">Destinatarios</th>
+                <th class="text-white font-semibold px-3 py-3 text-left" style="letter-spacing:.06em;text-transform:uppercase;min-width:130px;" data-i18n="rat.col.deletion">Plazo supresión</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#fff;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r1.activity">Personas Asociadas</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r1.purpose">Gestión de las personas socias</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 b) ejecución de contrato</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r1.source">El propio interesado</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r1.category">Identificativos, económicos, profesionales y curriculares</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r1.recipients">Registro de Asociaciones, Bancos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r1.deletion">6 años tras fin relación social</td>
+              </tr>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#F7FCFE;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r2.activity">Personas de Contacto</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r2.purpose">Gestión base de datos de contactos</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 f) interés legítimo</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r2.source">El propio interesado o su representante legal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r2.category">Identificativos y de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r2.recipients">No previstos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r2.deletion">Indefinida / hasta solicitud supresión</td>
+              </tr>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#fff;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r3.activity">Gestión de Eventos</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r3.purpose">Inscripción y gestión de asistentes (HSTLR)</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 a) consentimiento; Art. 6.1 f) interés legítimo</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r3.source">El propio interesado o su representante legal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r3.category">Identificativos y de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r3.recipients">No previstos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r3.deletion">5 años desde exigibilidad</td>
+              </tr>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#F7FCFE;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r4.activity">Usuarios Web</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r4.purpose">Gestión de solicitantes de información y contacto web</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 f) interés legítimo</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r4.source">El propio interesado o su representante legal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r4.category">Datos de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r4.recipients">No previstos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r4.deletion">5 años desde exigibilidad</td>
+              </tr>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#fff;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r5.activity">Consumidores y Atención al Cliente</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r5.purpose">Gestión de consumidores de tienda online</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 b) ejecución de contrato; Art. 6.1 f) interés legítimo</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r5.source">El propio interesado o su representante legal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r5.category">Identificativos, económicos, de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r5.recipients">Administraciones tributarias, Bancos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r5.deletion">5 años desde exigibilidad</td>
+              </tr>
+              <tr class="border-b border-[#CCE9F6]/60" style="background:#F7FCFE;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r6.activity">Administración</td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r6.purpose">Gestión administrativa y contable de clientes</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 b) ejecución de contrato</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r6.source">El propio interesado o su representante legal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r6.category">Identificativos, económicos, de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r6.recipients">Administraciones tributarias, Bancos, asesoría fiscal</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r6.deletion">6 años desde último asiento contable</td>
+              </tr>
+              <tr style="background:#fff;">
+                <td class="px-3 py-3 font-semibold" style="color:#598196;" data-i18n="rat.r7.activity">Gestión Redes Sociales <span class="text-gray-400 font-normal">(Encargado)</span></td>
+                <td class="px-3 py-3 text-gray-600" data-i18n="rat.r7.purpose">Gestión de Redes Sociales — BAT IZAN</td>
+                <td class="px-3 py-3 text-gray-500">Art. 6.1 b) ejecución de contrato</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r7.source">El propio interesado</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r7.category">Identificativos, económicos, de contacto</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r7.recipients">No previstos</td>
+                <td class="px-3 py-3 text-gray-500" data-i18n="rat.r7.deletion">5 años desde exigibilidad</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile cards -->
+        <div class="md:hidden space-y-3">
+          <!-- Card 1 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r1.activity">Personas Asociadas</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r1.purpose">Gestión de las personas socias</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 b) ejecución de contrato</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r1.category">Identificativos, económicos, profesionales</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.recipients">Destinatarios</span>: <span data-i18n="rat.r1.recipients">Registro de Asociaciones, Bancos</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r1.deletion">6 años tras fin relación social</span></p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r2.activity">Personas de Contacto</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r2.purpose">Gestión base de datos de contactos</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 f) interés legítimo</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r2.category">Identificativos y de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.recipients">Destinatarios</span>: <span data-i18n="rat.r2.recipients">No previstos</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r2.deletion">Indefinida / hasta solicitud supresión</span></p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r3.activity">Gestión de Eventos</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r3.purpose">Inscripción y gestión de asistentes (HSTLR)</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 a) consentimiento; Art. 6.1 f) interés legítimo</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r3.category">Identificativos y de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r3.deletion">5 años desde exigibilidad</span></p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r4.activity">Usuarios Web</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r4.purpose">Gestión de solicitantes de información y contacto web</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 f) interés legítimo</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r4.category">Datos de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r4.deletion">5 años desde exigibilidad</span></p>
+            </div>
+          </div>
+          <!-- Card 5 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r5.activity">Consumidores y Atención al Cliente</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r5.purpose">Gestión de consumidores de tienda online</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 b) y Art. 6.1 f)</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r5.category">Identificativos, económicos, de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.recipients">Destinatarios</span>: <span data-i18n="rat.r5.recipients">Administraciones tributarias, Bancos</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r5.deletion">5 años desde exigibilidad</span></p>
+            </div>
+          </div>
+          <!-- Card 6 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r6.activity">Administración</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.purpose">Finalidad</span>: <span data-i18n="rat.r6.purpose">Gestión administrativa y contable de clientes</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 b) ejecución de contrato</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r6.category">Identificativos, económicos, de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.recipients">Destinatarios</span>: <span data-i18n="rat.r6.recipients">Administraciones, Bancos, asesoría fiscal</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r6.deletion">6 años desde último asiento contable</span></p>
+            </div>
+          </div>
+          <!-- Card 7 -->
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;" data-i18n="rat.r7.activity">Gestión Redes Sociales (Encargado — BAT IZAN)</div>
+            <div class="px-4 py-3 space-y-1 text-xs text-gray-600 bg-white">
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.legal">Base jurídica</span>: Art. 6.1 b) ejecución de contrato</p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.category">Categoría</span>: <span data-i18n="rat.r7.category">Identificativos, económicos, de contacto</span></p>
+              <p><span class="font-semibold text-gray-700" data-i18n="rat.col.deletion">Supresión</span>: <span data-i18n="rat.r7.deletion">5 años desde exigibilidad</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ████ END RAT TABLE ████ -->
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.retention.title">Zenbat denboran gordetzen ditugu zure datuak?</h2>
+        <p data-i18n="privacy.retention.text">GAKOk eragindakoen datuak gordeko ditu erakundearekin duten harremanak irauten duen bitartean eta, ondoren, aplikatu beharreko artxibo eta dokumentazio araudian ezarritakoaren arabera. Eskubide bat eskatzen bada, eskatutako eskubidearen arabera datuak ezabatuko dira.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.access.title">Nork du sarbidea zure datu pertsonaletara?</h2>
+        <p data-i18n="privacy.access.text">GAKOk datu pertsonalen lagapenak edo komunikazioak egin ditzake indarreko legeriaren arabera hala eskatzen den kasuetan Herri Administrazioekin dituen betebeharrak betetzeko.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.rights.title">Zeintzuk dira eragindakoen eskubideak?</h2>
+        <p class="mb-3" data-i18n="privacy.rights.intro">Ondorengo eskubideak erabil ditzakezula jakinarazten dizugu:</p>
+        <ul class="space-y-2 pl-4">
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.1">Zure datu pertsonaletara sarbidea izateko eskubidea, zeintzuk tratatzen ari diren jakiteko.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.2">Datu pertsonal okerrak zuzentzeko eskubidea.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.3">Zure datu pertsonalak ezabatzeko eskubidea, hori posible denean.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.4">Zure datu pertsonalen tratamendua mugatzeko eskubidea.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.5">Zure datu pertsonalen tratamenduaren aurka egiteko eskubidea.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="privacy.rights.6">Zure datuen eramangarritasun-eskubidea, legezko oinarria zure baimena denean.</span></li>
+        </ul>
+        <p class="mt-4" data-i18n="privacy.rights.contact">Eskubide horiek doan erabil ditzakezu, idatzizko eskabide bidez: <a href="mailto:infogako@gakotc.com" class="text-[#598196] hover:underline">infogako@gakotc.com</a></p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.withdraw.title">Baimena kentzea eta komunikazio komertzialak</h2>
+        <p data-i18n="privacy.withdraw.text">Interesdunak edozein unetan komunikazio komertzialak jasotzeko emandako baimena ezeztatu dezake, komunikazio bakoitzean dagoen esteka sakatuz edo <a href="mailto:infogako@gakotc.com" class="text-[#598196] hover:underline">infogako@gakotc.com</a>-era idatziz. Baimenaren ezeztatze horrek ez du eraginik aurreko tratamenduaren zilegitasunean.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.security.title">Zer segurtasun neurri ditugu ezarrita?</h2>
+        <p data-i18n="privacy.security.text">GAKOk datu pertsonalen sekretu-betebeharra eta gorde-betebeharra betetzen ditu, eta aldaketa, galera, tratamendu edo baimenik gabeko sarbidea ekiditeko beharrezkoak diren neurriak hartzen ditu. Datu pertsonalen segurtasuna bermatzeko beharrezko neurri tekniko eta antolakuntzakoak ezarri ditu.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.links.title">Estekak</h2>
+        <p data-i18n="privacy.links.text">GAKOren web orriak GAKOk kontrolatzen ez dituen beste gune batzuetara hiperloturen bidez egin dezake. GAKOk ez du bermatzen eta ez da erantzule bere gain hartzen atzerriko gune horien edukien, fidagarritasunaren edo pribatutasun praktikarengatik.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="privacy.update.title">Pribatutasun Politikaren eguneratzea</h2>
+        <p data-i18n="privacy.update.text">GAKOk Pribatutasun Politika aldatu ahal izango du indarreko legeriaren arabera. Aldaketa oro Eragindakoari jakinaraziko zaio. GAKOren Pribatutasun Politikaren azken eguneraketa: 2025.</p>
+      </div>
+
+      <div class="bg-[#CCE9F6]/30 rounded-2xl p-6 border border-[#B1E0F4]">
+        <h2 class="section-title text-xl text-gray-800 mb-3" data-i18n="privacy.id.title">Arduradsunaren identifikazioa</h2>
+        <p><strong style="color:#598196;">ASOCIACIÓN ESTUDIANTIL JUNIOR EMPRESA GAKO</strong> (aurrerantzean, GAKO) NIF G56586787 zenbakiarekin eta helbide honekin: Leandro Agirretxe Plazatxoa, 1, 20304 Irun, Gipuzkoa.</p>
+        <p class="mt-2"><strong data-i18n="privacy.contact">Kontaktua:</strong> <a href="mailto:gakoteamcompany@gakotc.com" class="text-[#598196] hover:underline">gakoteamcompany@gakotc.com</a></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ████████ FOOTER (privacy page) ████████ -->
+<footer style="background:#1a2d36;" class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <div class="flex items-end gap-1 mb-4">
+          <div class="leading-none">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#86B4C4; letter-spacing:0.08em;">GA</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#598196; letter-spacing:0.08em; margin-top:-4px;">KO</div>
+          </div>
+          <div style="width:5px; height:5px; border-radius:50%; background:#86B4C4; margin-bottom:8px;"></div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs mb-6" style="font-weight:300;" data-i18n="footer.desc">
+          Talde ekintzaile independentea, lurraldearen etorkizuna sormena eta ilusioarekin eraikitzen.
+        </p>
+        <div class="flex gap-3">
+          <a href="https://www.linkedin.com/company/gakotc/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Links 1 -->
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.company">Enpresa</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.about">Nor Gara</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.team">Gure Taldea</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.abroad">Atzerriko Egonaldia</a></li>
+        </ul>
+      </div>
+
+      <!-- Links 2 -->
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.services">Zerbitzuak</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.projects">Proiektuak</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.contact">Kontaktua</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-gray-500 text-xs" data-i18n="footer.copy">Gako © 2026 · Eskubide guztiak erreserbatuta · Irun, Gipuzkoa</p>
+      <div class="flex gap-6">
+        <a href="#" class="footer-link" style="color:#86B4C4;" data-i18n="footer.privacy">Pribatutasun Politika</a>
+        <a href="#" onclick="goTo('legal'); return false;" class="footer-link" data-i18n="footer.legal">Lege Oharra</a>
+        <a href="#" onclick="goTo('cookies'); return false;" class="footer-link" data-i18n="footer.cookies">Cookieak</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+</div>
+
+<!-- ████████ AVISO LEGAL ████████ -->
+<div id="page-legal" class="page">
+<section class="py-28 bg-white min-h-screen">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <button onclick="history.back()" class="flex items-center gap-2 text-[#598196] text-sm font-medium mb-10 hover:text-[#3d6070] transition-colors group">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="legal.back">Itzuli</span>
+    </button>
+
+    <div class="text-center mb-16 fade-in">
+      <div class="section-label mb-3" data-i18n="legal.label">Informazio juridikoa</div>
+      <h1 class="section-title text-6xl md:text-7xl text-gray-900 mb-4"><span data-i18n="legal.title1">Lege</span> <span style="color:#86B4C4;" data-i18n="legal.title2">Oharra</span></h1>
+    </div>
+
+    <div class="prose-content text-gray-600 text-sm leading-relaxed space-y-6" style="font-weight:300;">
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="legal.s1.title">Aviso Legal</h2>
+        <p data-i18n="legal.s1.text">Bienvenido a la página Web de <strong style="color:#598196;">ASOCIACIÓN ESTUDIANTIL JUNIOR EMPRESA GAKO</strong> (en adelante, GAKO) con NIF G56586787 y domicilio en Leandro Agirretxe Plazatxoa, 1, 20304 Irun, Gipuzkoa. Contacto mediante mail en <a href="mailto:gakoteamcompany@gakotc.com" class="text-[#598196] hover:underline">gakoteamcompany@gakotc.com</a> e inscrita en el Registro de Asociaciones con el número: AS/G/25290/2023.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="legal.s2.title">Propiedad Intelectual</h2>
+        <p data-i18n="legal.s2.text">Los contenidos de este sitio Web, textos, imágenes, sonidos, animaciones, etc. así como su diseño gráfico y su código fuente están protegidos por la legislación española sobre los derechos de propiedad intelectual e industrial a favor de las sociedades que conforman GAKO. Queda por tanto prohibida su reproducción, distribución o comunicación pública, total o parcial, sin la autorización expresa de GAKO.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="legal.s3.title">Contenido de la Web y enlaces</h2>
+        <p data-i18n="legal.s3.text">En GAKO no nos responsabilizamos del mal uso que se realice de los contenidos de nuestra página Web, siendo exclusiva responsabilidad de la persona que accede a ellos o los utiliza. Tampoco asumimos ninguna responsabilidad por la información contenida en las páginas Web de terceros a las que se pueda acceder por enlaces o buscadores desde este sitio Web.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="legal.s4.title">Actualización y modificación de la página Web</h2>
+        <p data-i18n="legal.s4.text">GAKO se reserva el derecho a modificar o eliminar, sin previo aviso, tanto la información contenida en su sitio Web como su configuración y presentación, sin asumir responsabilidad alguna por ello.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="legal.s5.title">Indicaciones sobre aspectos técnicos</h2>
+        <p data-i18n="legal.s5.text">GAKO no asume ninguna responsabilidad que se pueda derivar de problemas técnicos o fallos en los equipos informáticos que se produzcan durante la conexión a la red de Internet, así como de daños que pudieran ser causados por terceras personas mediante intromisiones ilegítimas fuera del control de GAKO. También quedamos exonerados de toda responsabilidad ante posibles daños o perjuicios que pueda sufrir el usuario a consecuencia de errores, defectos u omisiones en la información que facilitemos cuando proceda de fuentes ajenas a nosotros.</p>
+      </div>
+
+      <div class="bg-[#CCE9F6]/30 rounded-2xl p-6 border border-[#B1E0F4]">
+        <h2 class="section-title text-xl text-gray-800 mb-3" data-i18n="legal.s6.title">Identificación del responsable</h2>
+        <p data-i18n="legal.s6.text"><strong style="color:#598196;">ASOCIACIÓN ESTUDIANTIL JUNIOR EMPRESA GAKO</strong> · NIF G56586787 · Leandro Agirretxe Plazatxoa, 1, 20304 Irun, Gipuzkoa.</p>
+        <p class="mt-2"><strong data-i18n="legal.s6.contact">Contacto:</strong> <a href="mailto:gakoteamcompany@gakotc.com" class="text-[#598196] hover:underline">gakoteamcompany@gakotc.com</a></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ████████ FOOTER (legal page) ████████ -->
+<footer style="background:#1a2d36;" class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-end gap-1 mb-4">
+          <div class="leading-none">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#86B4C4; letter-spacing:0.08em;">GA</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#598196; letter-spacing:0.08em; margin-top:-4px;">KO</div>
+          </div>
+          <div style="width:5px; height:5px; border-radius:50%; background:#86B4C4; margin-bottom:8px;"></div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs mb-6" style="font-weight:300;" data-i18n="footer.desc">Talde ekintzaile independentea, lurraldearen etorkizuna sormena eta ilusioarekin eraikitzen.</p>
+        <div class="flex gap-3">
+          <a href="https://www.linkedin.com/company/gakotc/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.company">Enpresa</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.about">Nor Gara</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.team">Gure Taldea</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.abroad">Atzerriko Egonaldia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.services">Zerbitzuak</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.projects">Proiektuak</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.contact">Kontaktua</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-gray-500 text-xs" data-i18n="footer.copy">Gako © 2026 · Eskubide guztiak erreserbatuta · Irun, Gipuzkoa</p>
+      <div class="flex gap-6">
+        <a href="#" onclick="goTo('privacy'); return false;" class="footer-link" data-i18n="footer.privacy">Pribatutasun Politika</a>
+        <a href="#" class="footer-link" style="color:#86B4C4;" data-i18n="footer.legal">Lege Oharra</a>
+        <a href="#" onclick="goTo('cookies'); return false;" class="footer-link" data-i18n="footer.cookies">Cookieak</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<!-- ████████ POLÍTICA DE COOKIES ████████ -->
+<div id="page-cookies" class="page">
+<section class="py-28 bg-white min-h-screen">
+  <div class="max-w-3xl mx-auto px-6">
+
+    <button onclick="history.back()" class="flex items-center gap-2 text-[#598196] text-sm font-medium mb-10 hover:text-[#3d6070] transition-colors group">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      <span data-i18n="cookies.back">Itzuli</span>
+    </button>
+
+    <div class="text-center mb-16 fade-in">
+      <div class="section-label mb-3" data-i18n="cookies.label">Informazio juridikoa</div>
+      <h1 class="section-title text-6xl md:text-7xl text-gray-900 mb-4"><span data-i18n="cookies.title1">Cookie</span> <span style="color:#86B4C4;" data-i18n="cookies.title2">Politika</span></h1>
+    </div>
+
+    <div class="prose-content text-gray-600 text-sm leading-relaxed space-y-6" style="font-weight:300;">
+
+      <div>
+        <p data-i18n="cookies.intro1">La <strong style="color:#598196;">ASOCIACIÓN ESTUDIANTIL JUNIOR EMPRESA GAKO</strong> (en adelante, GAKO) quieren informarle sobre el uso de las cookies en sus sitios web.</p>
+        <p class="mt-3" data-i18n="cookies.intro2">Las cookies son archivos que se pueden descargar en su equipo a través de las páginas web. Son herramientas que tienen un papel esencial para la prestación de numerosos servicios de la sociedad de la información. Entre otros, permiten a un sitio web almacenar y recuperar información sobre los hábitos de navegación de un usuario o de su equipo y, dependiendo de la información obtenida, se pueden utilizar para reconocer al usuario y mejorar el servicio ofrecido.</p>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="cookies.types.title">Tipos de cookies</h2>
+        <p data-i18n="cookies.types.p1">Se pueden distinguir dos tipos de cookies, según quien sea la entidad que gestione el dominio desde donde se envían las cookies y trate los datos que se obtengan: cookies propias y cookies de terceros.</p>
+        <p class="mt-3" data-i18n="cookies.types.p2">Además, hablamos de cookies de sesión o cookies permanentes, cuando se trata del plazo de tiempo que permanecen almacenadas en el navegador del cliente.</p>
+        <p class="mt-3" data-i18n="cookies.types.p3">Por último, existe otra clasificación con cinco tipos de cookies según la finalidad para la que se traten los datos obtenidos: cookies técnicas, cookies de personalización, cookies de análisis, cookies publicitarias y cookies de publicidad comportamental.</p>
+        <p class="mt-3" data-i18n="cookies.types.p4">Quedan exceptuadas del cumplimiento de las obligaciones establecidas en el artículo 22.2 de la LSSI las cookies utilizadas para alguna de las siguientes finalidades:</p>
+        <ul class="space-y-2 pl-4 mt-3">
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li1">Permitir únicamente la comunicación entre el equipo del usuario y la red.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li2">Estrictamente prestar un servicio expresamente solicitado por el usuario.</span></li>
+        </ul>
+        <p class="mt-3" data-i18n="cookies.types.p5">El Grupo de Trabajo del Artículo 29 en su <a href="http://ec.europa.eu/justice/data-protection/article-29/documentation/opinion-recommendation/files/2012/wp194_es.pdf" target="_blank" class="text-[#598196] hover:underline">Dictamen 4/2012</a> ha interpretado que entre las cookies exceptuadas estarían:</p>
+        <ul class="space-y-2 pl-4 mt-3">
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li3">Cookies de «entrada del usuario»</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li4">Cookies de autenticación o identificación de usuario (únicamente de sesión)</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li5">Cookies de seguridad del usuario</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li6">Cookies de sesión de reproductor multimedia</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li7">Cookies de sesión para equilibrar la carga</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li8">Cookies de personalización de la interfaz de usuario</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.types.li9">Cookies de complemento (plug-in) para intercambiar contenidos sociales</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="cookies.used.title">Cookies utilizadas en la web</h2>
+
+        <div class="space-y-4 mt-4">
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;">WordPress</div>
+            <div class="px-4 py-3 space-y-3 text-xs text-gray-600 bg-white">
+              <div><p class="font-semibold text-gray-700 mb-1">cookillian_opt_*</p><p data-i18n="cookies.wp.cookillian">Almacena sus preferencias con respecto al uso de cookies en este sitio web.</p></div>
+              <div><p class="font-semibold text-gray-700 mb-1">wordpress_test_cookie</p><p data-i18n="cookies.wp.test">Ayuda a determinar si no se puede almacenar cookies para WordPress. Requerida para el funcionamiento del sitio.</p></div>
+              <div><p class="font-semibold text-gray-700 mb-1">wp-settings-*</p><p data-i18n="cookies.wp.settings">Ayuda a recordar sus preferencias personales dentro de WordPress.</p></div>
+              <div><p class="font-semibold text-gray-700 mb-1">comment_author_*</p><p data-i18n="cookies.wp.comment">Recuerda su último comentario y sus datos (nombre y email) para no tener que escribirlos de nuevo.</p></div>
+              <div><p class="font-semibold text-gray-700 mb-1">wordpress_*</p><p data-i18n="cookies.wp.auth">Cookie de autenticación que almacena detalles de WordPress. Requerida para el funcionamiento del sitio.</p></div>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;">Google Analytics</div>
+            <div class="px-4 py-3 text-xs text-gray-600 bg-white">
+              <p data-i18n="cookies.ga.text">Los sitios web de GAKO utilizan Google Analytics, un servicio de analítica web de Google que permite la medición y análisis de la navegación. Se trata de cookies propias, de sesión y de análisis. Obtiene información sobre número de usuarios, páginas vistas, frecuencia de visitas, duración, navegador, idioma, terminal y ciudad.</p>
+              <p class="mt-2"><span data-i18n="cookies.ga.more">Más información e inhabilitación:</span> <a href="https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage" target="_blank" class="text-[#598196] hover:underline">developers.google.com/analytics</a></p>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-[#B1E0F4] overflow-hidden">
+            <div class="px-4 py-2 font-semibold text-sm" style="background:linear-gradient(90deg,#86B4C4,#598196);color:#fff;">Google Maps</div>
+            <div class="px-4 py-3 text-xs text-gray-600 bg-white">
+              <p><span data-i18n="cookies.maps.text">Los sitios web de GAKO utilizan Google Maps. Más información:</span> <a href="https://www.google.com/intl/es/policies/technologies/cookies/" target="_blank" class="text-[#598196] hover:underline">google.com/policies/technologies/cookies</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="cookies.accept.title">Aceptación de la Política de cookies</h2>
+        <p data-i18n="cookies.accept.p">GAKO asume que usted acepta el uso de cookies. No obstante, muestra información sobre su Política de cookies en la parte inferior de cualquier página con cada inicio de sesión. Ante esta información es posible:</p>
+        <ul class="space-y-2 pl-4 mt-3">
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.accept.li1"><strong>Aceptar cookies.</strong> No se volverá a visualizar este aviso durante la presente sesión.</span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span data-i18n="cookies.accept.li2"><strong>No aceptar.</strong> La web no funcionará correctamente y no se podrá navegar por ella.</span></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="section-title text-2xl text-gray-800 mb-3" data-i18n="cookies.manage.title">Cómo modificar la configuración de las cookies</h2>
+        <p data-i18n="cookies.manage.p">Puede restringir, bloquear o borrar las cookies de GAKO o cualquier otro sitio web utilizando su navegador:</p>
+        <ul class="space-y-2 pl-4 mt-3">
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span><strong>Internet Explorer:</strong> <a href="http://windows.microsoft.com/es-xl/internet-explorer/delete-manage-cookies" target="_blank" class="text-[#598196] hover:underline">windows.microsoft.com</a></span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span><strong>Firefox:</strong> <a href="http://support.mozilla.org/es/kb/Borrar%20cookies" target="_blank" class="text-[#598196] hover:underline">support.mozilla.org</a></span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span><strong>Chrome:</strong> <a href="http://support.google.com/chrome/answer/95647?hl=es" target="_blank" class="text-[#598196] hover:underline">support.google.com</a></span></li>
+          <li class="flex gap-2"><span style="color:#598196; flex-shrink:0;">✦</span><span><strong>Safari:</strong> <a href="http://www.apple.com/es/privacy/use-of-cookies/" target="_blank" class="text-[#598196] hover:underline">apple.com/es/privacy</a></span></li>
+        </ul>
+        <p class="mt-3" data-i18n="cookies.manage.tools">También puede gestionar el almacén de cookies con herramientas como <a href="https://www.ghostery.com/" target="_blank" class="text-[#598196] hover:underline">Ghostery</a> o <a href="https://www.youronlinechoices.com/es/" target="_blank" class="text-[#598196] hover:underline">Your Online Choices</a>.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ████████ FOOTER (cookies page) ████████ -->
+<footer style="background:#1a2d36;" class="py-16">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-12 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-end gap-1 mb-4">
+          <div class="leading-none">
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#86B4C4; letter-spacing:0.08em;">GA</div>
+            <div style="font-family:'Bebas Neue',sans-serif; font-size:2.4rem; line-height:1; color:#598196; letter-spacing:0.08em; margin-top:-4px;">KO</div>
+          </div>
+          <div style="width:5px; height:5px; border-radius:50%; background:#86B4C4; margin-bottom:8px;"></div>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed max-w-xs mb-6" style="font-weight:300;" data-i18n="footer.desc">Talde ekintzaile independentea, lurraldearen etorkizuna sormena eta ilusioarekin eraikitzen.</p>
+        <div class="flex gap-3">
+          <a href="https://www.linkedin.com/company/gakotc/" target="_blank" rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.company">Enpresa</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.about">Nor Gara</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.team">Gure Taldea</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.abroad">Atzerriko Egonaldia</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.1em; color:#fff; margin-bottom:1rem;" data-i18n="footer.services">Zerbitzuak</h4>
+        <ul class="space-y-3">
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.projects">Proiektuak</a></li>
+          <li><a href="#" onclick="history.back(); return false;" class="footer-link" data-i18n="footer.contact">Kontaktua</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <p class="text-gray-500 text-xs" data-i18n="footer.copy">Gako © 2026 · Eskubide guztiak erreserbatuta · Irun, Gipuzkoa</p>
+      <div class="flex gap-6">
+        <a href="#" onclick="goTo('privacy'); return false;" class="footer-link" data-i18n="footer.privacy">Pribatutasun Politika</a>
+        <a href="#" onclick="goTo('legal'); return false;" class="footer-link" data-i18n="footer.legal">Lege Oharra</a>
+        <a href="#" class="footer-link" style="color:#86B4C4;" data-i18n="footer.cookies">Cookieak</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script src="js/vendor/leaflet.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>
