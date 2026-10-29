@@ -405,6 +405,10 @@ const translations = {
     "footer.privacy": "Pribatutasun Politika",
     "footer.legal": "Lege Oharra",
     "footer.cookies": "Cookieak",
+    "cookiebar.text": "Web honek cookieak erabiltzen ditu nabigazio-esperientzia hobetzeko.",
+    "cookiebar.more": "Informazio gehiago",
+    "cookiebar.reject": "Ukatu",
+    "cookiebar.accept": "Onartu",
     "legal.back": "Itzuli",
     "legal.label": "Informazio juridikoa",
     "legal.title1": "Lege",
@@ -618,6 +622,10 @@ const translations = {
     "footer.privacy": "Política de Privacidad",
     "footer.legal": "Aviso Legal",
     "footer.cookies": "Cookies",
+    "cookiebar.text": "Esta web utiliza cookies para mejorar tu experiencia de navegación.",
+    "cookiebar.more": "Más información",
+    "cookiebar.reject": "Rechazar",
+    "cookiebar.accept": "Aceptar",
     "legal.back": "Volver",
     "legal.label": "Información jurídica",
     "legal.title1": "Aviso",
@@ -831,6 +839,10 @@ const translations = {
     "footer.privacy": "Privacy Policy",
     "footer.legal": "Legal Notice",
     "footer.cookies": "Cookies",
+    "cookiebar.text": "This website uses cookies to improve your browsing experience.",
+    "cookiebar.more": "More information",
+    "cookiebar.reject": "Reject",
+    "cookiebar.accept": "Accept",
     "legal.back": "Back",
     "legal.label": "Legal Information",
     "legal.title1": "Legal",
@@ -1073,3 +1085,17 @@ function setLang(lang) {
 
 // Init with Euskera
 document.addEventListener('DOMContentLoaded', () => setLang('eu'));
+
+// ─── Aviso de cookies ───
+function setCookieConsent(value) {
+  try { localStorage.setItem('gako-cookie-consent', value); } catch (e) {}
+  const banner = document.getElementById('cookie-banner');
+  if (banner) banner.hidden = true;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  let consent = null;
+  try { consent = localStorage.getItem('gako-cookie-consent'); } catch (e) {}
+  const banner = document.getElementById('cookie-banner');
+  if (banner && !consent) banner.hidden = false;
+});

@@ -464,9 +464,9 @@
   .team-linkedin:hover { background: #598196; color: #fff; transform: translateY(-2px); }
   .proj-logo {
     display: block;
-    height: 44px;
+    height: 64px;
     width: auto;
-    max-width: 150px;
+    max-width: 170px;
     object-fit: contain;
     margin-bottom: 10px;
   }
@@ -504,3 +504,61 @@
     font-size: 0.75rem; color: #86B4C4;
     display: flex; align-items: center; gap: 6px;
   }
+/* ── Enlaces de proyectos ── */
+.proj-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+.proj-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #CCE9F6;
+  color: #598196;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.proj-link:hover { background: #598196; color: #fff; transform: translateY(-2px); }
+
+/* ── Aviso de cookies ── */
+.cookie-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  padding: 16px 20px;
+  background: #1a2d36;
+  color: #e5eef2;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-text { margin: 0; flex: 1 1 280px; }
+.cookie-more { color: #86B4C4; text-decoration: underline; margin-left: 4px; }
+.cookie-actions { display: flex; gap: 10px; flex-shrink: 0; }
+.cookie-btn {
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.cookie-btn-primary { background: #86B4C4; color: #1a2d36; border: 1.5px solid #86B4C4; }
+.cookie-btn-primary:hover { background: #fff; border-color: #fff; }
+.cookie-btn-ghost { background: transparent; color: #e5eef2; border: 1.5px solid rgba(255,255,255,0.3); }
+.cookie-btn-ghost:hover { border-color: #fff; }
